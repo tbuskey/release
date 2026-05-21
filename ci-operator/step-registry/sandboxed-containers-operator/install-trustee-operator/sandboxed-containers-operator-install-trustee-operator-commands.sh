@@ -65,7 +65,7 @@ function get_cluster_domain() {
     local console_url
     console_url=$(oc whoami --show-console 2>/dev/null || true)
     if [[ -n "${console_url}" ]]; then
-      cluster_domain=$(echo "${console_url}" | sed 's|https://console-openshift-console\.||' | sed 's|/.*||')
+      cluster_domain=$(echo "${console_url}" | sed 's@https://console-openshift-console\.@@' | sed 's@/.*@@')
     fi
   fi
 
@@ -86,7 +86,7 @@ function get_trustee_catalog_source_manifest() {
   fi
 
   if oc get catalogsource -n openshift-marketplace "${TRUSTEE_CATALOG_SOURCE_NAME}" &>/dev/null; then
-    echo ">>> CatalogSource ${TRUSTEE_CATALOG_SOURCE_NAME} already exists, skipping creation"
+    echo ">>> Using existing ${TRUSTEE_CATALOG_SOURCE_NAME} catalog source"
     return 0
   fi
 
@@ -197,7 +197,7 @@ metadata:
   namespace: TRUSTEE_NAMESPACE_PLACEHOLDER
 type: Opaque
 stringData:
-  key-0: |
+  key-0: @
     -----BEGIN PUBLIC KEY-----
     MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwQEjdCiL3ILUf07NDkDVhgKCj1C6
     BsCfmM/zt1kNSj0/+nAqA+25XfyClYq2lJFJ6TkgCsf57cTCkXYDz9c+Yg==
