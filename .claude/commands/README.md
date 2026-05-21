@@ -4,6 +4,29 @@ This directory contains custom slash commands to help developers work with the O
 
 ## Available Commands
 
+### `/osc-step-debug` - Debug Sandboxed Containers Operator CI Steps
+
+**Purpose**: Debug and fix sandboxed-containers-operator (OSC) CI step failures using `/pj-rehearse` for rapid iteration.
+
+**Scope**: ONLY for sandboxed-containers-operator CI configuration
+- Files in `ci-operator/step-registry/sandboxed-containers-operator/`
+- Config in `ci-operator/config/openshift/sandboxed-containers-operator/`
+
+**Usage**:
+```bash
+/osc-step-debug [job_name]
+```
+
+**What it does**:
+- Identifies failing OSC step-registry components
+- Analyzes OSC-specific patterns (OLM, trustee, kbs-client, CoCo/Kata/PeerPods)
+- Guides through fix-commit-test iteration cycle
+- Monitors long-running rehearsals with background scripts
+
+See detailed workflow in `.claude/commands/osc-step-debug.md`.
+
+---
+
 ### `/step-finder` - Step Registry Component Discovery
 
 **Purpose**: Search and discover existing step-registry steps, workflows, and chains to reuse in CI configurations.
